@@ -112,6 +112,13 @@ def binary_search(sequence, value):
 
     return False
 
+
+def foo(bar=[0]):
+    """Every time it's called it returns an incremented value by 1 from previous call, starting from 0. """
+    bar[0] += 1
+    return bar[0]
+
+
 if __name__ == "__main__":
     num = int(raw_input("Number: "))
     result = "is prime" if check_prime(num) else "is not prime"
@@ -136,3 +143,5 @@ if __name__ == "__main__":
     print "Bubble sort: ", sortable_list
     searched_value = 7
     print "Search for %s: %s" % (searched_value, binary_search(sortable_list, searched_value))
+
+    print "stateful function returns: ", foo(), foo(), foo()
