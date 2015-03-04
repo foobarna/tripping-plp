@@ -61,9 +61,8 @@ def my_filter(func, sequence):
 
 def my_reduce(func, iterable, initializer=None):
     """
-    Applies the function to prev element (or initializer for the first time)
-    from left to right using the previous value as the first parameter of
-    the function. Return the final result.
+    Applies the function to prev element (or initializer for the first time) from left to right using the previous value
+     as the first parameter of the function. Return the final result.
     """
     items = iter(iterable)
 
@@ -80,6 +79,38 @@ def my_reduce(func, iterable, initializer=None):
 def sum_fancy_numbers(stop):
     """Sums up all the numbers n that are lower than the input and have the property 3 | n * n - 1."""
     return my_reduce(lambda a, b: a+b, my_filter(lambda x: True if (x * x - 1) % 3 == 0 and x > 2 else False, range(1, stop)))
+
+
+def bubble_sort(sequence):
+    """Performs sorting for the list using bubble sort algorithm."""
+    for i in xrange(len(sequence)):
+        modified = False
+        for k in xrange(len(sequence) - 1, i, -1):
+            if sequence[k] < sequence[k - 1]:
+                sequence[k], sequence[k - 1] = sequence[k - 1], sequence[k]
+                modified = True
+
+        if not modified:
+            break
+
+
+def binary_search(sequence, value):
+    """Searches for a value in a sorted list in a divide et impera manner, returns True if found and false otherwise"""
+    low, high = 0, len(sequence) - 1
+
+    if sequence[low] > value or value > sequence[high]:
+        return False
+
+    while low != high:
+        mid = (low + high) / 2
+        if value == sequence[mid]:
+            return True
+        elif value > sequence[mid]:
+            low = mid
+        else:
+            high = mid
+
+    return False
 
 if __name__ == "__main__":
     num = int(raw_input("Number: "))
@@ -99,3 +130,9 @@ if __name__ == "__main__":
     print my_reduce(lambda a, b: a+b, [1, 1, 1, 1])
 
     print sum_fancy_numbers(5)
+
+    sortable_list = [8, 5, 3, 1, 9, 6, 0, 7, 4, 2, 5]
+    bubble_sort(sortable_list)
+    print "Bubble sort: ", sortable_list
+    searched_value = 7
+    print "Search for %s: %s" % (searched_value, binary_search(sortable_list, searched_value))
