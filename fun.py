@@ -49,6 +49,11 @@ def fibonacci_recursive(n):
         return fibs
 
 
+def my_map(func, sequence):
+    """Returns a list after applying the function to each item of sequence."""
+    return [func(item) for item in sequence]
+
+
 if __name__ == "__main__":
     num = int(raw_input("Number: "))
     result = "is prime" if check_prime(num) else "is not prime"
@@ -61,3 +66,5 @@ if __name__ == "__main__":
     fib_no = int(raw_input("Fibonacci numbers: "))
     print fibonacci_iterative(fib_no)
     print fibonacci_recursive(fib_no)
+
+    print my_map(str.upper, ['test', 'test1', 'test2'])
