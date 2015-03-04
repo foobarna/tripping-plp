@@ -1,4 +1,32 @@
 from math import sqrt
+from timeit import default_timer as timer
+import time
+
+
+def time_measure(func):
+    """Decorator for measuring the execution time in seconds of a function."""
+    def measure(*args, **kwargs):
+        start = timer()
+        result = func(*args, **kwargs)
+        end = timer()
+        print "Execution of %s took %s s." % (func.__name__, end - start)
+        return result
+
+    return measure
+
+
+def total_time_measure(func, total=[0]):
+    """Decorator for measuring the execution time in seconds of all functions decorated by it."""
+    def measure(*args, **kwargs):
+        start = timer()
+        result = func(*args, **kwargs)
+        end = timer()
+        total[0] += end - start
+        print "Execution so far: %s." % total[0]
+        return result
+
+    return measure
+
 
 
 def check_prime(n):
@@ -81,8 +109,11 @@ def sum_fancy_numbers(stop):
     return my_reduce(lambda a, b: a+b, my_filter(lambda x: True if (x * x - 1) % 3 == 0 and x > 2 else False, range(1, stop)))
 
 
+@total_time_measure
+@time_measure
 def bubble_sort(sequence):
     """Performs sorting for the list using bubble sort algorithm."""
+    time.sleep(1.2)
     for i in xrange(len(sequence)):
         modified = False
         for k in xrange(len(sequence) - 1, i, -1):
@@ -93,9 +124,11 @@ def bubble_sort(sequence):
         if not modified:
             break
 
-
+@total_time_measure
+@time_measure
 def binary_search(sequence, value):
     """Searches for a value in a sorted list in a divide et impera manner, returns True if found and false otherwise"""
+    time.sleep(2.3)
     low, high = 0, len(sequence) - 1
 
     if sequence[low] > value or value > sequence[high]:
@@ -120,28 +153,28 @@ def foo(bar=[0]):
 
 
 if __name__ == "__main__":
-    num = int(raw_input("Number: "))
-    result = "is prime" if check_prime(num) else "is not prime"
-    print result
-
-    upper_limit = int(raw_input("Upper limit: "))
-    primes = ", ".join(map(str, primes_range(upper_limit)))
-    print primes
-
-    fib_no = int(raw_input("Fibonacci numbers: "))
-    print "iterative: ", fibonacci_iterative(fib_no)
-    print "recursive: ", fibonacci_recursive(fib_no)
-
-    print my_map(str.upper, ["test", "test1", "test2"])
-    print my_filter("test".__eq__, ["test", "test1", "test2"])
-    print my_reduce(lambda a, b: a+b, [1, 1, 1, 1])
-
-    print sum_fancy_numbers(5)
-
+    # num = int(raw_input("Number: "))
+    # result = "is prime" if check_prime(num) else "is not prime"
+    # print result
+    #
+    # upper_limit = int(raw_input("Upper limit: "))
+    # primes = ", ".join(map(str, primes_range(upper_limit)))
+    # print primes
+    #
+    # fib_no = int(raw_input("Fibonacci numbers: "))
+    # print "iterative: ", fibonacci_iterative(fib_no)
+    # print "recursive: ", fibonacci_recursive(fib_no)
+    #
+    # print my_map(str.upper, ["test", "test1", "test2"])
+    # print my_filter("test".__eq__, ["test", "test1", "test2"])
+    # print my_reduce(lambda a, b: a+b, [1, 1, 1, 1])
+    #
+    # print sum_fancy_numbers(5)
+    #
     sortable_list = [8, 5, 3, 1, 9, 6, 0, 7, 4, 2, 5]
     bubble_sort(sortable_list)
     print "Bubble sort: ", sortable_list
     searched_value = 7
     print "Search for %s: %s" % (searched_value, binary_search(sortable_list, searched_value))
-
-    print "stateful function returns: ", foo(), foo(), foo()
+    #
+    # print "stateful function returns: ", foo(), foo(), foo()
