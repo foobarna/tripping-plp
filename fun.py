@@ -28,6 +28,19 @@ def total_time_measure(func, total=[0]):
     return measure
 
 
+def memoize(func):
+    cache = {}
+    miss = object()
+
+    def wrapper(*args, **kwargs):
+        result = cache.get(args, miss)
+        if result is miss:
+            result = func(*args, **kwargs)
+            cache[args] = result
+        return result
+
+    return wrapper
+
 
 def check_prime(n):
     """Checks if a number is prime and return true if so, false otherwise."""
@@ -55,13 +68,13 @@ def fibonacci_iterative(n):
     b = 1
     fibs = list()
     for i in range(n):
-        c = a + b
-        fibs.append(c)
-        a, b = b, c
+        a, b = b, a + b
+        fibs.append(b)
 
     return fibs
 
 
+@memoize
 def fibonacci_recursive(n):
     """Returns a list of n fibonacci natural numbers calculated recursively."""
     if n < 1:
@@ -153,28 +166,28 @@ def foo(bar=[0]):
 
 
 if __name__ == "__main__":
-    # num = int(raw_input("Number: "))
-    # result = "is prime" if check_prime(num) else "is not prime"
-    # print result
-    #
-    # upper_limit = int(raw_input("Upper limit: "))
-    # primes = ", ".join(map(str, primes_range(upper_limit)))
-    # print primes
-    #
-    # fib_no = int(raw_input("Fibonacci numbers: "))
-    # print "iterative: ", fibonacci_iterative(fib_no)
-    # print "recursive: ", fibonacci_recursive(fib_no)
-    #
-    # print my_map(str.upper, ["test", "test1", "test2"])
-    # print my_filter("test".__eq__, ["test", "test1", "test2"])
-    # print my_reduce(lambda a, b: a+b, [1, 1, 1, 1])
-    #
-    # print sum_fancy_numbers(5)
-    #
+    num = int(raw_input("Number: "))
+    result = "is prime" if check_prime(num) else "is not prime"
+    print result
+
+    upper_limit = int(raw_input("Upper limit: "))
+    primes = ", ".join(map(str, primes_range(upper_limit)))
+    print primes
+
+    fib_no = int(raw_input("Fibonacci numbers: "))
+    print "iterative: ", fibonacci_iterative(fib_no)
+    print "recursive: ", fibonacci_recursive(fib_no)
+
+    print my_map(str.upper, ["test", "test1", "test2"])
+    print my_filter("test".__eq__, ["test", "test1", "test2"])
+    print my_reduce(lambda a, b: a+b, [1, 1, 1, 1])
+
+    print sum_fancy_numbers(5)
+
     sortable_list = [8, 5, 3, 1, 9, 6, 0, 7, 4, 2, 5]
     bubble_sort(sortable_list)
     print "Bubble sort: ", sortable_list
     searched_value = 7
     print "Search for %s: %s" % (searched_value, binary_search(sortable_list, searched_value))
-    #
-    # print "stateful function returns: ", foo(), foo(), foo()
+
+    print "stateful function returns: ", foo(), foo(), foo()
