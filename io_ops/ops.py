@@ -1,7 +1,7 @@
 from fun import primes_range
 import collections
-import fileinput
-
+import urllib2
+import re
 
 def sum_numbers(filename):
     """Sums up all the numbers from a file, one number per line"""
@@ -33,8 +33,17 @@ def merge_sorted(filenames, merged_filename="merged_sorted_numbers.out"):
         fout.writelines(map(lambda x: str(x) + '\n', numbers))
 
 
+def get_links(weburl):
+    website = urllib2.urlopen(weburl)
+
+    html = website.read()
+    links = re.findall('"((http|ftp)s?://.*?)"', html)
+    return links
+
+
 if __name__ == "__main__":
     # print sum_numbers("numbers.txt")
     # print prime_numbers("numbers.txt")
     # print unique_words("lorem.txt")
-    merge_sorted(['numbers_sorted0.txt', 'numbers_sorted1.txt', 'numbers_sorted2.txt'])
+    # merge_sorted(['numbers_sorted0.txt', 'numbers_sorted1.txt', 'numbers_sorted2.txt'])
+    print get_links('https://www.google.ro')

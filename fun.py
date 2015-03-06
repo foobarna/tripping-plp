@@ -166,23 +166,23 @@ def foo(bar=[0]):
 
 
 if __name__ == "__main__":
-    num = int(raw_input("Number: "))
-    result = "is prime" if check_prime(num) else "is not prime"
-    print result
-
-    upper_limit = int(raw_input("Upper limit: "))
-    primes = ", ".join(map(str, primes_range(upper_limit)))
-    print primes
-
-    fib_no = int(raw_input("Fibonacci numbers: "))
-    print "iterative: ", fibonacci_iterative(fib_no)
-    print "recursive: ", fibonacci_recursive(fib_no)
-
-    print my_map(str.upper, ["test", "test1", "test2"])
-    print my_filter("test".__eq__, ["test", "test1", "test2"])
-    print my_reduce(lambda a, b: a+b, [1, 1, 1, 1])
-
-    print sum_fancy_numbers(5)
+    # num = int(raw_input("Number: "))
+    # result = "is prime" if check_prime(num) else "is not prime"
+    # print result
+    #
+    # upper_limit = int(raw_input("Upper limit: "))
+    # primes = ", ".join(map(str, primes_range(upper_limit)))
+    # print primes
+    #
+    # fib_no = int(raw_input("Fibonacci numbers: "))
+    # print "iterative: ", fibonacci_iterative(fib_no)
+    # print "recursive: ", fibonacci_recursive(fib_no)
+    #
+    # print my_map(str.upper, ["test", "test1", "test2"])
+    # print my_filter("test".__eq__, ["test", "test1", "test2"])
+    # print my_reduce(lambda a, b: a+b, [1, 1, 1, 1])
+    #
+    # print sum_fancy_numbers(5)
 
     sortable_list = [8, 5, 3, 1, 9, 6, 0, 7, 4, 2, 5]
     bubble_sort(sortable_list)
