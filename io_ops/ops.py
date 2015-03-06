@@ -3,6 +3,7 @@ import collections
 import urllib2
 import re
 
+
 def sum_numbers(filename):
     """Sums up all the numbers from a file, one number per line"""
     with open(filename, "r") as f:
@@ -42,8 +43,8 @@ def get_links(weburl):
 
 
 if __name__ == "__main__":
-    # print sum_numbers("numbers.txt")
-    # print prime_numbers("numbers.txt")
-    # print unique_words("lorem.txt")
-    # merge_sorted(['numbers_sorted0.txt', 'numbers_sorted1.txt', 'numbers_sorted2.txt'])
+    print sum_numbers("numbers.txt")
+    print prime_numbers("numbers.txt")
+    print unique_words("lorem.txt")
+    merge_sorted(['numbers_sorted0.txt', 'numbers_sorted1.txt', 'numbers_sorted2.txt'])
     print get_links('https://www.google.ro')
