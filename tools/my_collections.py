@@ -1,3 +1,7 @@
+class BQueueEmpty(Exception):
+    pass
+
+
 class BQueue:
     """A basic queue implementation."""
     def __init__(self, initial=None):
@@ -11,6 +15,18 @@ class BQueue:
 
     def dequeue(self):
         """Gets the first element from the queue and remove it afterwords."""
-        self.queue.pop(0)
-        self.size -= 1
+        try:
+            self.queue.pop(0)
+            self.size -= 1
+        except IndexError, e:
+            self.size = 0
+            raise BQueueEmpty(e.message)
 
+    def clear(self):
+        """Clears the queue."""
+        self.queue = []
+        self.size = 0
+
+    def size(self):
+        """Gets the queue's size."""
+        return self.size
