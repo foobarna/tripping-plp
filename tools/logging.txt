@@ -1,0 +1,2 @@
+Logger::ERROR::Some message for error
+Logger::INFO::Display info messages.

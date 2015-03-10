@@ -22,9 +22,10 @@ class Logger:
         'NOTSET': NOTSET,
     }
 
-    def __init__(self, level=CRITICAL, enabled_levels=None):
+    def __init__(self, level=CRITICAL, enabled_levels=None, filename=None):
         """Creates the logger with the monitoring level and desire levels."""
         self.level = level
+        self.filename = filename
         if enabled_levels is None:
             self.enabledLevels = {key: True for key, value in Logger.levelNames.iteritems() if isinstance(key, str)}
         else:
@@ -41,7 +42,11 @@ class Logger:
 
     def print_log(self, level, msg, *args, **kwargs):
         """Format and print the log message."""
-        print "Logger::%s::%s" % (Logger.levelNames[level], msg.format(*args, **kwargs))
+        line = "Logger::%s::%s" % (Logger.levelNames[level], msg.format(*args, **kwargs))
+        print line
+        if self.filename:
+            with open(self.filename, 'a') as f:
+                f.write("%s\n" % line)
 
     def set_level(self, level):
         """Set the monitoring level of logger."""
