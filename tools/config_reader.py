@@ -1,21 +1,23 @@
+class ConfigReaderException(Exception):
+    """Exception class for ConfigReader."""
+    pass
+
+
 class ConfigReader:
     """A configuration reader."""
-    def __init__(self, filename=None):
+    def __init__(self, filename, load=True):
         """Initialize the configurator with values from file, if given."""
         if filename is None:
-            self.filename = None
-            self.config = {}
-        else:
-            self.load(filename)
+            raise ConfigReaderException("No file given for loading the configuration.")
 
-    def load(self, filename=None):
+        self.filename = filename
+        self.config = {}
+        if load:
+            self.load()
+
+    def load(self):
         """Loads configuration from file."""
-        if filename:
-            self.filename = filename
-        elif self.filename is None:
-            return None
-
-        with open(filename) as f:
+        with open(self.filename) as f:
             self.config = {}
             for line in f:
                 splitted = line.split(':', 1)
@@ -27,16 +29,17 @@ class ConfigReader:
         """Returns the value of a configuration key."""
         return self.config.get(key, None)
 
-    def set(self, key, value):
+    def set(self, key, value, save=False):
         """Sets the value for a configuration key and save it in file."""
+        if key is None or value is None:
+            raise ConfigReaderException("key or value can not be None.")
+
         self.config[key] = value
-        self.save()
+        if save:
+            self.save()
 
     def save(self):
         """Saves the configuration in file."""
-        if self.filename is None:
-            return None
-
         with open(self.filename, 'w') as f:
             lines = []
             for key, value in self.config.iteritems():
@@ -45,9 +48,9 @@ class ConfigReader:
 
 
 def test_conf_reader():
-    cr = ConfigReader('pseudo.conf')
+    cr = ConfigReader()
     print cr.get('core'), cr.get('desc')
-    cr.set('desc', 'something more')
+    cr.set('desc', 'something more555S')
 
 if __name__ == '__main__':
     test_conf_reader()
